@@ -21,8 +21,9 @@
 }
 .mainView{
 	display: flex;
-	background-color: grey;
+	background-color: #5ec3e5;
 	flex:7;
+	overflow: auto;
 }
 .infoRow{
 	background-color: yellow;
@@ -34,10 +35,37 @@
 }
 .weatherinfo{
 	justify-self: center;
-	padding: 50px;
+	padding: 20px;
+	margin-left: 20px;
 	flex: 1;
 }
 .weathericon{
-	background-color: white;
+	background-color: #5ec3e5;
 	flex: 1;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin: auto;
+	padding: 30px;
+}
+.iconframe{
+	background-color:white;
+	position: relative;
+	border-radius: 20px;
+	height: 150px;
+	width: 150px;
+}
+.heading{
+	font-weight: bold;
+	font-size: 25px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.temp{
+	font-size: 40px;
+}
+
+.desc{
+	font-size: 15px;
 }

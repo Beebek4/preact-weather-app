@@ -10,7 +10,7 @@ import Button from '../button';
 import style_iphone from '../button/style_iphone';
 
 import Forecast from '../forecast';
-
+import Widgets from '../widgets';
 
 
 export default class Iphone extends Component {
@@ -18,25 +18,42 @@ export default class Iphone extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
-		this.fetchWeatherData();
-		// temperature state
-		this.state.temp = "";
-		// button display state
-		this.setState({ display: true });
+		
+		this.state = {
+			locationLongtitude : 0,
+			locationLatitude : 0
+		}
+
+		this.fetchLongLatData("London");
+		
+	}
+
+	// call to fetch longtitude and latitude of given location
+	fetchLongLatData(place){
+		var url = "http://api.openweathermap.org/geo/1.0/direct?q="+place+"&limit=5&appid=1b7c33e6a19e20845a04bebc13db2f76";
+		$.ajax({
+			url: url,
+			dataType: "jsonp",
+			success : this.parseLongLatResponse,
+			error : function(req, err){ console.log('API call failed ' + err); }
+		});
 	}
 
 	// a call to fetch weather data via wunderground
-	fetchWeatherData = () => {
+	fetchWeatherData = (lat,lon) => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "https://api.openweathermap.org/data/2.5/weather?lat=51.5&lon=-0.11&appid=1b7c33e6a19e20845a04bebc13db2f76";
+		var url = "https://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid=1b7c33e6a19e20845a04bebc13db2f76&units=metric";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
 			success : this.parseResponse,
 			error : function(req, err){ console.log('API call failed ' + err); }
-		})
-		// once the data grabbed, hide the buttond
-		this.setState({ display: false });
+		});
+		
+	}
+
+	capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
 	// the main render method for the iphone component
@@ -50,15 +67,25 @@ export default class Iphone extends Component {
 				<div class={ style.topview }>
 					<div class={style.mainView}>
 						<div class={style.weatherinfo}>
-							{ this.state.locate }<br/>
-							{ this.state.cond }<br/>
-							{ this.state.temp }
+							<div class={style.heading}>{ this.state.locate }</div>
+							<div class={style.temp}>{ Math.trunc(this.state.temp) }°C</div>
+							<p class={style.desc}>{ this.state.cond }</p>
+							
+							
+
+							
 						</div>
-						<div class={style.weathericon}></div>
+						<div class={style.weathericon}>
+							<div class={ style.iconframe }>
+								<img src={ this.state.image } alt="icon" height="150" />
+							</div>
+							
+						</div>
 						
 						
 					</div>
 					<div class={style.infoRow}>
+						<Widgets/>
 					</div>
 					<div class={style.slider}>
 					</div>
@@ -71,16 +98,33 @@ export default class Iphone extends Component {
 		);
 	}
 
+	parseLongLatResponse = (parsed_json) => {
+		var lat = parsed_json['0']['lat'];
+		var lon = parsed_json['0']['lon'];
+		var location = parsed_json['0']['local_names']['en'];
+
+		console.log(parsed_json);
+
+		this.setState({ 
+			locate: location,
+			locationLatitude: lat,
+			locationLongtitude: lon
+		});
+		
+		// call to fetch weather data using given long and lat
+		this.fetchWeatherData(this.state.locationLatitude,this.state.locationLongtitude);
+	}
+
 	parseResponse = (parsed_json) => {
-		var location = parsed_json['name'];
 		var temp_c = parsed_json['main']['temp'];
 		var conditions = parsed_json['weather']['0']['description'];
+		var icon = parsed_json['weather']['0']['icon'];
 
 		// set states for fields so they could be rendered later on
 		this.setState({
-			locate: location,
 			temp: temp_c,
-			cond : conditions
+			cond : this.capitalizeFirstLetter(conditions),
+			image : "https://openweathermap.org/img/wn/"+icon+"@2x.png"
 		});      
 	}
 }
