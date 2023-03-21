@@ -23,9 +23,19 @@ export default class Iphone extends Component {
 			locationLongtitude : 0,
 			locationLatitude : 0
 		}
-
-		this.fetchLongLatData("London");
+		this.fetchLongLatData("london");
 		
+		
+	}
+
+	fetchForecastData(lat, lon){
+		var url = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&cnt=40&units=metric&appid=1b7c33e6a19e20845a04bebc13db2f76";
+		$.ajax({
+			url: url,
+			dataType: "jsonp",
+			success : this.parseForecastResponse,
+			error : function(req, err){ console.log('Forecast API call failed ' + err); }
+		});
 	}
 
 	// call to fetch longtitude and latitude of given location
@@ -35,7 +45,7 @@ export default class Iphone extends Component {
 			url: url,
 			dataType: "jsonp",
 			success : this.parseLongLatResponse,
-			error : function(req, err){ console.log('API call failed ' + err); }
+			error : function(req, err){ console.log('Longtitude and Latitude API call failed ' + err); }
 		});
 	}
 
@@ -47,7 +57,7 @@ export default class Iphone extends Component {
 			url: url,
 			dataType: "jsonp",
 			success : this.parseResponse,
-			error : function(req, err){ console.log('API call failed ' + err); }
+			error : function(req, err){ console.log('Weather API call failed ' + err); }
 		});
 		
 	}
@@ -98,12 +108,38 @@ export default class Iphone extends Component {
 		);
 	}
 
+	parseForecastResponse = (parsed_json) => {
+
+		var day8 = [];
+		
+		//Compares the 3 hour interval temperatures of the same day to find the highest and lowest then stores them in an array
+		for (let i = 0; i < parsed_json['cnt']; i++) {
+			if (i%8 == 0){
+				day8[i/8] = {day: parsed_json['list'][i]['dt_txt'],icon: parsed_json['list'][i]['weather']['0']['icon'] ,maxtemp: parseInt(parsed_json['list'][i]['main']['temp_max']),mintemp: parseInt(parsed_json['list'][i]['main']['temp_min'])};
+			}
+			else{
+				if (day8[Math.trunc(i/8)].maxtemp < parseInt(parsed_json['list'][i]['main']['temp_max'])){
+					day8[Math.trunc(i/8)].maxtemp = parseInt(parsed_json['list'][i]['main']['temp_max']);
+				}
+				else if (day8[Math.trunc(i/8)].mintemp > parseInt(parsed_json['list'][i]['main']['temp_min'])){
+					day8[Math.trunc(i/8)].mintemp = parseInt(parsed_json['list'][i]['main']['temp_min']);
+				} 
+			} 
+		}
+
+		console.log(day8);
+		console.log(parsed_json);
+
+		this.setState({ 
+			dayforecast: day8,
+		});
+		
+	}
+
 	parseLongLatResponse = (parsed_json) => {
 		var lat = parsed_json['0']['lat'];
 		var lon = parsed_json['0']['lon'];
 		var location = parsed_json['0']['local_names']['en'];
-
-		console.log(parsed_json);
 
 		this.setState({ 
 			locate: location,
@@ -113,6 +149,7 @@ export default class Iphone extends Component {
 		
 		// call to fetch weather data using given long and lat
 		this.fetchWeatherData(this.state.locationLatitude,this.state.locationLongtitude);
+		this.fetchForecastData(this.state.locationLatitude,this.state.locationLongtitude);
 	}
 
 	parseResponse = (parsed_json) => {
