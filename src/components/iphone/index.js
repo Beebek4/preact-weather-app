@@ -10,7 +10,8 @@ import Button from '../button';
 import style_iphone from '../button/style_iphone';
 
 import Forecast from '../forecast';
-import Widgets from '../widgets';
+import Widgets from '../widgets';import WeatherAlertWidget from '../weatheralert';
+
 
 
 export default class Iphone extends Component {
