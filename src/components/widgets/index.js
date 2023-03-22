@@ -8,7 +8,7 @@ export default class Widgets extends Component {
 	render() {
 		return (
 			<div class={style.container}>
-				<button class={ style.uv } clickFunction={ this.fetchWeatherData }>
+				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
 					UV Index
 				</button>
 				<button class={ style.button } clickFunction={ this.fetchWeatherData }>

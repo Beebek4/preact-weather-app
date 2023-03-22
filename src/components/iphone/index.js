@@ -105,7 +105,7 @@ export default class Iphone extends Component {
 				</div>
 				<div class={ style.botview }>
 					<Forecast/>
-					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/};
+					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
 				</div>
 			</div>
 		);

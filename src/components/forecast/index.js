@@ -40,9 +40,6 @@ export default class Forecast extends Component {
 	render() {
 		return (
 			<div class={style.forecastbox}>
-				<div class={style.daybox}>
-					<p>yae</p>
-				</div>
 				<div class={style.container}>
 					{data.map(({ day, icon, maxtemp, mintemp }) => {
 						const date = new Date(day);
