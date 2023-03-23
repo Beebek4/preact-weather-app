@@ -64,8 +64,6 @@ export default class Clothing extends Component {
             alarm=true;
         }
         //props.cond == "Light rain" ? <div>Raining</div> :<div>Not raining</div>
-        console.log(advice);
-        console.log(clothing);
         return (
             <div  class={style.forecastbox}>
                 <header class={style.header}>

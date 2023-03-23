@@ -9,8 +9,8 @@ import $ from 'jquery';
 import Button from '../button';
 import style_iphone from '../button/style_iphone';
 
-import Forecast from '../forecast';
-//import Clothing from '../clothingrecs';
+//import Forecast from '../forecast';
+import Clothing from '../clothingrecs';
 import Widgets from '../widgets';import WeatherAlertWidget from '../weatheralert';
 
 
@@ -23,7 +23,9 @@ export default class Iphone extends Component {
 		
 		this.state = {
 			locationLongtitude : 0,
-			locationLatitude : 0
+			locationLatitude : 0,
+			temp: null,
+            cond: null,
 		}
 		this.fetchLongLatData("london");
 		
@@ -104,8 +106,8 @@ export default class Iphone extends Component {
 					
 				</div>
 				<div class={ style.botview }>
-					<Forecast/>
-					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
+					{/*<Forecast/>*/}
+					<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
 				</div>
 			</div>
 		);
