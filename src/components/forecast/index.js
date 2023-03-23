@@ -40,18 +40,12 @@ export default class Forecast extends Component {
 	render(props) {
 		const weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		//method to attain the corresponding weekday name from the date format of the API
-		function getWeekdayName(dateString) {
-  			const date = new Date(dateString);
-  			const day = date.getDay();
-  			return weekdayNames[day];
-		}
+
 		//assign the prop locally only once the data has been fetched
 		if(props.dayforecast!=undefined){
 			weekData = props.dayforecast;
+			{console.log(props.dayforecast)}
 			//store the weekday name inside each object instead
-			for (let i = 0; i < weekData.length; i++) {
-				weekData[i].day=getWeekdayName(weekData[i].day);
-			}
 		}
 		return (
 			<div class={style.forecastbox}>
