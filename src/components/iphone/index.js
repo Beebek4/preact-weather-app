@@ -9,7 +9,7 @@ import $ from 'jquery';
 import Button from '../button';
 import style_iphone from '../button/style_iphone';
 
-//import Forecast from '../forecast';
+import Forecast from '../forecast';
 import Clothing from '../clothingrecs';
 import Widgets from '../widgets';import WeatherAlertWidget from '../weatheralert';
 
@@ -106,8 +106,9 @@ export default class Iphone extends Component {
 					
 				</div>
 				<div class={ style.botview }>
-					{/*<Forecast/>*/}
-					<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
+
+					<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
+					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
 				</div>
 			</div>
 		);
@@ -131,10 +132,7 @@ export default class Iphone extends Component {
 				} 
 			} 
 		}
-
 		console.log(day8);
-		console.log(parsed_json);
-
 		this.setState({ 
 			dayforecast: day8,
 		});
