@@ -72,52 +72,6 @@ export default class Iphone extends Component {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
-	// the main render method for the iphone component
-	render() {
-		// check if temperature data is fetched, if so add the sign styling to the page
-		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-
-		// display all weather data
-		return (
-			<div class={ style.container}>
-				<div class={ style.topview }>
-					<div class={style.mainView}>
-						<div class={style.weatherinfo}>
-							<div class={style.heading}>{ this.state.locate }</div>
-							<div class={style.temp}>{ Math.trunc(this.state.temp) }°C</div>
-							<p class={style.desc}>{ this.state.cond }</p>
-
-
-
-
-						</div>
-						<div class={style.weathericon}>
-							<div class={ style.iconframe }>
-								<img src={ this.state.image } alt="icon" height="150" />
-							</div>
-
-						</div>
-
-
-					</div>
-					<div class={style.infoRow}>
-						<Widgets/>
-					</div>
-					<div class={style.slider}>
-					<WeatherAlertWidget />
-					</div>
-
-				</div>
-				<div class={ style.botview }>
-					<Carousel>
-						<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
-						<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
-					</Carousel>
-				</div>
-			</div>
-		);
-	}
-
 	parseForecastResponse = (parsed_json) => {
 
 		let day8 = [];
@@ -169,4 +123,51 @@ export default class Iphone extends Component {
 			image : "https://openweathermap.org/img/wn/"+icon+"@2x.png"
 		});
 	}
+	// the main render method for the iphone component
+	render() {
+		// check if temperature data is fetched, if so add the sign styling to the page
+		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
+
+		// display all weather data
+		return (
+			<div class={ style.container}>
+				<div class={ style.topview }>
+					<div class={style.mainView}>
+						<div class={style.weatherinfo}>
+							<div class={style.heading}>{ this.state.locate }</div>
+							<div class={style.temp}>{ Math.trunc(this.state.temp) }°C</div>
+							<p class={style.desc}>{ this.state.cond }</p>
+
+
+
+
+						</div>
+						<div class={style.weathericon}>
+							<div class={ style.iconframe }>
+								<img src={ this.state.image } alt="icon" height="150" />
+							</div>
+
+						</div>
+
+
+					</div>
+					<div class={style.infoRow}>
+						<Widgets/>
+					</div>
+					<div class={style.slider}>
+					<WeatherAlertWidget />
+					</div>
+
+				</div>
+				<div class={ style.botview }>
+					<Carousel>
+						<Forecast parseForecastResponse={this.parseResponse}/>
+						<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
+					</Carousel>
+				</div>
+			</div>
+		);
+	}
+
+
 }
