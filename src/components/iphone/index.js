@@ -13,6 +13,7 @@ import Forecast from '../forecast';
 import Clothing from '../clothingrecs';
 import Widgets from '../widgets';
 import WeatherAlertWidget from '../weatheralert';
+import Carousel from "../carousel";
 
 
 
@@ -21,50 +22,50 @@ export default class Iphone extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
-		
+
 		this.state = {
 			locationLongtitude : 0,
 			locationLatitude : 0,
 			temp: null,
-            cond: null,
-		}
+			cond: null
+		};
 		this.fetchLongLatData("london");
-		
-		
+
+
 	}
 
 	fetchForecastData(lat, lon){
-		var url = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&cnt=40&units=metric&appid=1b7c33e6a19e20845a04bebc13db2f76";
+		const url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&cnt=40&units=metric&appid=1b7c33e6a19e20845a04bebc13db2f76";
 		$.ajax({
-			url: url,
+			url,
 			dataType: "jsonp",
 			success : this.parseForecastResponse,
-			error : function(req, err){ console.log('Forecast API call failed ' + err); }
+			error(req, err){ console.log('Forecast API call failed ' + err); }
 		});
 	}
 
 	// call to fetch longtitude and latitude of given location
 	fetchLongLatData(place){
-		var url = "http://api.openweathermap.org/geo/1.0/direct?q="+place+"&limit=5&appid=1b7c33e6a19e20845a04bebc13db2f76";
+		let url = "http://api.openweathermap.org/geo/1.0/direct?q="+place+"&limit=5&appid=1b7c33e6a19e20845a04bebc13db2f76";
 		$.ajax({
-			url: url,
+			url,
 			dataType: "jsonp",
 			success : this.parseLongLatResponse,
-			error : function(req, err){ console.log('Longtitude and Latitude API call failed ' + err); }
+			error(req, err){ console.log('Longtitude and Latitude API call failed ' + err); }
 		});
 	}
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = (lat,lon) => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "https://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid=1b7c33e6a19e20845a04bebc13db2f76&units=metric";
+		let url = "https://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&appid=1b7c33e6a19e20845a04bebc13db2f76&units=metric";
 		$.ajax({
-			url: url,
+			url,
 			dataType: "jsonp",
 			success : this.parseResponse,
-			error : function(req, err){ console.log('Weather API call failed ' + err); }
+			error(req, err){ console.log('Weather API call failed ' + err); }
 		});
-		
+
 	}
 
 	capitalizeFirstLetter(string) {
@@ -75,7 +76,7 @@ export default class Iphone extends Component {
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-		
+
 		// display all weather data
 		return (
 			<div class={ style.container}>
@@ -85,19 +86,19 @@ export default class Iphone extends Component {
 							<div class={style.heading}>{ this.state.locate }</div>
 							<div class={style.temp}>{ Math.trunc(this.state.temp) }°C</div>
 							<p class={style.desc}>{ this.state.cond }</p>
-							
-							
 
-							
+
+
+
 						</div>
 						<div class={style.weathericon}>
 							<div class={ style.iconframe }>
 								<img src={ this.state.image } alt="icon" height="150" />
 							</div>
-							
+
 						</div>
-						
-						
+
+
 					</div>
 					<div class={style.infoRow}>
 						<Widgets/>
@@ -105,11 +106,13 @@ export default class Iphone extends Component {
 					<div class={style.slider}>
 					<WeatherAlertWidget />
 					</div>
-					
+
 				</div>
 				<div class={ style.botview }>
-					<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
-					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
+					<Carousel>
+						<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
+						<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
+					</Carousel>
 				</div>
 			</div>
 		);
@@ -117,55 +120,53 @@ export default class Iphone extends Component {
 
 	parseForecastResponse = (parsed_json) => {
 
-		var day8 = [];
-		
+		let day8 = [];
+
 		//Compares the 3 hour interval temperatures of the same day to find the highest and lowest then stores them in an array
 		for (let i = 0; i < parsed_json['cnt']; i++) {
 			if (i%8 == 0){
 				day8[i/8] = {day: parsed_json['list'][i]['dt_txt'],icon: parsed_json['list'][i]['weather']['0']['icon'] ,maxtemp: parseInt(parsed_json['list'][i]['main']['temp_max']),mintemp: parseInt(parsed_json['list'][i]['main']['temp_min'])};
 			}
-			else{
-				if (day8[Math.trunc(i/8)].maxtemp < parseInt(parsed_json['list'][i]['main']['temp_max'])){
-					day8[Math.trunc(i/8)].maxtemp = parseInt(parsed_json['list'][i]['main']['temp_max']);
-				}
-				else if (day8[Math.trunc(i/8)].mintemp > parseInt(parsed_json['list'][i]['main']['temp_min'])){
-					day8[Math.trunc(i/8)].mintemp = parseInt(parsed_json['list'][i]['main']['temp_min']);
-				} 
-			} 
+			else if (day8[Math.trunc(i/8)].maxtemp < parseInt(parsed_json['list'][i]['main']['temp_max'])){
+				day8[Math.trunc(i/8)].maxtemp = parseInt(parsed_json['list'][i]['main']['temp_max']);
+			}
+			else if (day8[Math.trunc(i/8)].mintemp > parseInt(parsed_json['list'][i]['main']['temp_min'])){
+				day8[Math.trunc(i/8)].mintemp = parseInt(parsed_json['list'][i]['main']['temp_min']);
+			}
 		}
 		console.log(day8);
-		this.setState({ 
-			dayforecast: day8,
+		this.setState({
+			dayforecast: day8
 		});
-		
+
 	}
 
 	parseLongLatResponse = (parsed_json) => {
-		var lat = parsed_json['0']['lat'];
-		var lon = parsed_json['0']['lon'];
-		var location = parsed_json['0']['local_names']['en'];
+		let lat = parsed_json['0']['lat'];
+		let lon = parsed_json['0']['lon'];
+		let location = parsed_json['0']['local_names']['en'];
 
-		this.setState({ 
+		this.setState({
 			locate: location,
 			locationLatitude: lat,
 			locationLongtitude: lon
 		});
-		
+
 		// call to fetch weather data using given long and lat
 		this.fetchWeatherData(this.state.locationLatitude,this.state.locationLongtitude);
 		this.fetchForecastData(this.state.locationLatitude,this.state.locationLongtitude);
 	}
 
 	parseResponse = (parsed_json) => {
-		var temp_c = parsed_json['main']['temp'];
-		var conditions = parsed_json['weather']['0']['description'];
-		var icon = parsed_json['weather']['0']['icon'];
+		let temp_c = parsed_json['main']['temp'];
+		let conditions = parsed_json['weather']['0']['description'];
+		let icon = parsed_json['weather']['0']['icon'];
 
 		// set states for fields so they could be rendered later on
 		this.setState({
 			temp: temp_c,
 			cond : this.capitalizeFirstLetter(conditions),
 			image : "https://openweathermap.org/img/wn/"+icon+"@2x.png"
-		});      
+		});
 	}
 }
