@@ -11,7 +11,8 @@ import style_iphone from '../button/style_iphone';
 
 import Forecast from '../forecast';
 import Clothing from '../clothingrecs';
-import Widgets from '../widgets';import WeatherAlertWidget from '../weatheralert';
+import Widgets from '../widgets';
+import WeatherAlertWidget from '../weatheralert';
 
 
 
@@ -107,8 +108,8 @@ export default class Iphone extends Component {
 				</div>
 				<div class={ style.botview }>
 
-					{/*<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>*/}
-					<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
+					<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
+					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
 				</div>
 			</div>
 		);
