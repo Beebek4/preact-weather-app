@@ -103,11 +103,11 @@ export default class Iphone extends Component {
 						<Widgets/>
 					</div>
 					<div class={style.slider}>
+					<WeatherAlertWidget />
 					</div>
 					
 				</div>
 				<div class={ style.botview }>
-
 					<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
 					{/*<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>*/}
 				</div>

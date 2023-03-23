@@ -31,19 +31,18 @@ class WeatherAlertWidget extends Component {
     //     });
     //   });
     
-    // Mock response for testing purposes
+    /*Mock response for testing purposes
     const mockResponse = {
       "alert": {
         "title": "Tornado Warning",
-        "description": "A tornado has been sighted in the area. Seek shelter immediately.",
-        "instruction": "Go to the lowest level of your home, away from windows and exterior walls. Cover your head and neck with your arms and put as many walls between you and the outside as possible."
+        "description": "Tornado sighted in the area. Seek shelter immediately.",
+        "instruction": "Go to the lowest level of your home. Cover your head and neck with your arms and put as many walls between you and the outside as possible."
       }
     };
-    
-    // const mockResponse = {
-    //     "alert": null
-    //   };
-
+    */
+    const mockResponse = {
+      "alert": null
+    }
     const { alert } = mockResponse;
     this.setState({
       alert,
@@ -63,17 +62,17 @@ class WeatherAlertWidget extends Component {
     }
 
     if (!alert) {
-      return <div>No alerts to display.</div>;
+      return console.log("No alerts to display");
     }
 
     return (
-      <div>
-        <h2>{alert.title}</h2>
-        <p>{alert.description}</p>
-        <p>{alert.instruction}</p>
+      <div style="color:red;">
+        <h2 style="margin:0px;height:16px;">{alert.title}</h2>
+        <p style="margin=0px;font-size:13.5px;font-weight:bold;">{alert.description}<br />{alert.instruction}</p>
       </div>
     );
   }
 }
+
 
 export default WeatherAlertWidget;
