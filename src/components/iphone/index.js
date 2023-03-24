@@ -10,7 +10,7 @@ import Button from '../button';
 import style_iphone from '../button/style_iphone';
 
 import Forecast from '../forecast';
-import Clothing from '../clothingrecs';
+import Advice from '../advice';
 import Widgets from '../widgets';
 import WeatherAlertWidget from '../weatheralert';
 import Carousel from "../carousel";
@@ -205,7 +205,7 @@ export default class Iphone extends Component {
 				<div class={ style.botview }>
 					<Carousel>
 						<Forecast parseForecastResponse={this.parseForecastResponse} dayforecast={this.state.dayforecast}/>
-						<Clothing parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
+						<Advice parseResponse={this.parseResponse} temp={this.state.temp} cond={this.state.cond}/>
 					</Carousel>
 				</div>
 			</div>

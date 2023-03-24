@@ -1,8 +1,8 @@
 // import preact
 import { h, render, Component, useEffect} from 'preact';
-import style from '../clothingrecs/style_recs';
+import style from './style_recs';
 
-export default class Clothing extends Component {
+export default class Advice extends Component {
     render(props){
         let badWeather = ["snow","sleet","freezing","heavy","extreme","shower","thunderstorm"] //the possibilities of bad weather
         let goodWeather = ["clear","clouds","drizzle", "rain"] //the possibilies of good/viable weather to exercise in
