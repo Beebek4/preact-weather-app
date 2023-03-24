@@ -8,21 +8,18 @@ export default class Widgets extends Component {
 	render() {
 		return (
 			<div class={style.container}>
-				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
-					UV Index
-				</button>
-				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
-					Gust Speed
-				</button>
-				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
-					Precipitation
-				</button>
-				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
-					Feels Like
-				</button>
-				<button class={ style.button } clickFunction={ this.fetchWeatherData }>
-					Visibility
-				</button>
+				<label class={ style.label }>
+					Humidity: {this.props.humid}%
+				</label>
+				<label class={ style.label }>
+					Wind Speed: {this.props.wind}m/sec
+				</label>
+				<label class={ style.label }>
+					Feels Like: {this.props.feel}°C
+				</label>
+				<label class={ style.label }>
+					Visibility: {this.props.vis} metres
+				</label>
 			</div>
 		);
 	}

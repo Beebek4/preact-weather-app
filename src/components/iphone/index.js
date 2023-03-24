@@ -88,7 +88,6 @@ export default class Iphone extends Component {
 				day8[Math.trunc(i/8)].mintemp = parseInt(parsed_json['list'][i]['main']['temp_min']);
 			}
 		}
-		console.log(day8);
 		this.setState({
 			dayforecast: day8
 		});
@@ -115,12 +114,22 @@ export default class Iphone extends Component {
 		let temp_c = parsed_json['main']['temp'];
 		let conditions = parsed_json['weather']['0']['description'];
 		let icon = parsed_json['weather']['0']['icon'];
+		let feels = parsed_json['main']['feels_like'];
+        let winds = parsed_json['wind']['speed'];
+        let humids = parsed_json['main']['humidity'];
+        let viss = parsed_json['visibility'];
+
+
 
 		// set states for fields so they could be rendered later on
 		this.setState({
 			temp: temp_c,
 			cond : this.capitalizeFirstLetter(conditions),
-			image : "https://openweathermap.org/img/wn/"+icon+"@2x.png"
+			image : "https://openweathermap.org/img/wn/"+icon+"@2x.png",
+			feel : feels,
+			wind : winds,
+			humid: humids,
+			vis : viss,
 		});
 	}
 	// the main render method for the iphone component
@@ -152,7 +161,7 @@ export default class Iphone extends Component {
 
 					</div>
 					<div class={style.infoRow}>
-						<Widgets/>
+						<Widgets feel={this.state.feel} wind={this.state.wind} vis={this.state.vis} humid={this.state.humid}  />
 					</div>
 					<div class={style.slider}>
 					<WeatherAlertWidget />
