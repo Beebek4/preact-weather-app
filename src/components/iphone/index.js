@@ -24,6 +24,7 @@ export default class Iphone extends Component {
 		super(props);
 
 		this.state = {
+			location: 'london',
 			locationLongtitude : 0,
 			locationLatitude : 0,
 			temp: null,
@@ -132,6 +133,29 @@ export default class Iphone extends Component {
 			vis : viss,
 		});
 	}
+
+	// a method to update the location state when the user submits the form
+	updateLocation = (e) => {
+		e.preventDefault();
+		const newLocation = this.locationInput.value.trim();
+		if (newLocation !== "") {
+		this.fetchLongLatData(newLocation);
+		}
+	};
+	
+	// a method to render the search box and button
+	renderSearchBox() {
+		return (
+		<form class={style.searchBox} onSubmit={this.updateLocation}>
+			<input
+			type="text"
+			ref={(input) => (this.locationInput = input)}
+			placeholder="Enter city name"
+			/>
+			<button type="submit">Search</button>
+		</form>
+		);
+	}
 	// the main render method for the iphone component
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
@@ -140,7 +164,9 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={ style.container}>
+				{this.renderSearchBox()}
 				<div class={ style.topview }>
+
 					<div class={style.mainView}>
 						<div class={style.weatherinfo}>
 							<div class={style.heading}>{ this.state.locate }</div>
