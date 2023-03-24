@@ -3,36 +3,11 @@ import { h, render, Component } from 'preact';
 import style from '../forecast/iphone_forecast';
 // an empty array of objects for the 5 forecasted day of the week
 var weekData=[
-    {
-        "day": "2023-03-24 00:00:00",
-        "icon": "04n",
-        "maxtemp": 12,
-        "mintemp": 7
-    },
-    {
-        "day": "2023-03-25 00:00:00",
-        "icon": "10n",
-        "maxtemp": 12,
-        "mintemp": 7
-    },
-    {
-        "day": "2023-03-26 00:00:00",
-        "icon": "04n",
-        "maxtemp": 8,
-        "mintemp": 5
-    },
-    {
-        "day": "2023-03-27 00:00:00",
-        "icon": "04n",
-        "maxtemp": 8,
-        "mintemp": 3
-    },
-    {
-        "day": "2023-03-28 00:00:00",
-        "icon": "01n",
-        "maxtemp": 8,
-        "mintemp": 1
-    }
+	{"day": "", "icon": "", "maxtemp": 0, "mintemp": 0},
+	{"day": "", "icon": "", "maxtemp": 0, "mintemp": 0},
+	{"day": "", "icon": "", "maxtemp": 0, "mintemp": 0},
+	{"day": "", "icon": "", "maxtemp": 0, "mintemp": 0},
+	{"day": "", "icon": "", "maxtemp": 0, "mintemp": 0},
 ];
 
 export default class Forecast extends Component {
@@ -40,7 +15,7 @@ export default class Forecast extends Component {
 	render(props) {
 		const weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		//method to attain the corresponding weekday name from the date format of the API
-
+		{console.log(props.dayforecast)}
 		//assign the prop locally only once the data has been fetched
 		if(props.dayforecast!=undefined){
 			weekData = props.dayforecast;
