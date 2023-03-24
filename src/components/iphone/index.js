@@ -198,7 +198,7 @@ export default class Iphone extends Component {
 						<Widgets feel={this.state.feel} wind={this.state.wind} vis={this.state.vis} humid={this.state.humid}  />
 					</div>
 					<div class={style.slider}>
-					<WeatherAlertWidget />
+					<WeatherAlertWidget/>
 					</div>
 
 				</div>

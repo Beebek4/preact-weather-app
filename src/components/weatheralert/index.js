@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-
+import style from './style.less';
 class WeatherAlertWidget extends Component {
   state = {
     alert: null,
@@ -31,18 +31,20 @@ class WeatherAlertWidget extends Component {
     //     });
     //   });
     
-    /*Mock response for testing purposes
+    //Mock response for testing purposes
     const mockResponse = {
       "alert": {
-        "title": "Tornado Warning",
-        "description": "Tornado sighted in the area. Seek shelter immediately.",
-        "instruction": "Go to the lowest level of your home. Cover your head and neck with your arms and put as many walls between you and the outside as possible."
+        "title": "Flood Warning",
+        "description": "River levels are expected to rise significantly in the next few hours due to heavy rainfall.",
+        "instruction": "Turn off gas, electricity, and water supplies if it is safe to do so. Do not walk or drive through floodwater. Stay tuned to local news and weather updates."
       }
     };
-    */
+    //
+   /*
     const mockResponse = {
       "alert": null
     }
+    */
     const { alert } = mockResponse;
     this.setState({
       alert,
@@ -62,14 +64,15 @@ class WeatherAlertWidget extends Component {
     }
 
     if (!alert) {
-      return console.log("No alerts to display");
+      return ("No alerts to display");
     }
 
     return (
-      <div style="color:red;">
-        <h2 style="margin:0px;height:16px;">{alert.title}</h2>
-        <p style="margin=0px;font-size:13.5px;font-weight:bold;">{alert.description}<br />{alert.instruction}</p>
+      <div class={style['red-text']}>
+        <h2 class={style['alert-title']}>{alert.title}</h2>
+        <p class={style['alert-description']}>{alert.description}<br />{alert.instruction}</p>
       </div>
+
     );
   }
 }
