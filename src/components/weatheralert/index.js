@@ -31,20 +31,20 @@ class WeatherAlertWidget extends Component {
     //     });
     //   });
     
-    //Mock response for testing purposes
+    /*Mock response for testing purposes
     const mockResponse = {
       "alert": {
         "title": "Flood Warning",
-        "description": "River levels are expected to rise significantly in the next few hours due to heavy rainfall.",
+        "description": "River levels to rise significantly in the next few hours due to heavy rainfall.",
         "instruction": "Turn off gas, electricity, and water supplies if it is safe to do so. Do not walk or drive through floodwater. Stay tuned to local news and weather updates."
       }
     };
-    //
-   /*
+    */
+   
     const mockResponse = {
       "alert": null
     }
-    */
+    
     const { alert } = mockResponse;
     this.setState({
       alert,
@@ -64,7 +64,7 @@ class WeatherAlertWidget extends Component {
     }
 
     if (!alert) {
-      return ("No alerts to display");
+      return (console.log("No alerts to display"));
     }
 
     return (

@@ -154,7 +154,7 @@ export default class Iphone extends Component {
 	// a method to render the search box and button
 	renderSearchBox() {
 		return (
-		<form class={style.searchBox} onSubmit={this.updateLocation}>
+		<form onSubmit={this.updateLocation}>
 			<input
 			type="text"
 			ref={(input) => (this.locationInput = input)}
@@ -172,7 +172,6 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={ style.container}>
-				{this.renderSearchBox()}
 				<div class={ style.topview }>
 
 					<div class={style.mainView}>
@@ -199,6 +198,7 @@ export default class Iphone extends Component {
 					</div>
 					<div class={style.slider}>
 					<WeatherAlertWidget/>
+					<div class={style.searchBox}>{this.renderSearchBox()}</div>
 					</div>
 
 				</div>
