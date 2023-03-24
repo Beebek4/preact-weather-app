@@ -161,7 +161,7 @@ export default class Iphone extends Component {
 			ref={(input) => (this.locationInput = input)}
 			placeholder="Enter city name"
 			/>
-			<button type="submit">Search</button>
+			<button type="submit" onClick={() => this.updateLocation}>Search</button>
 		</form>
 		</div>
 		);

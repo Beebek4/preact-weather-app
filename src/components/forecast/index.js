@@ -17,12 +17,13 @@ export default class Forecast extends Component {
 		//assign the prop locally only once the data has been fetched
 		if(props.dayforecast!=undefined){
 			weekData = props.dayforecast;
-	
+			//store the weekday name inside each object instead
 		}
 		return (
 			<div class={style.forecastbox}>
 				<div class={style.container}>
 					{weekData.map(({ day, icon, maxtemp, mintemp }) => {
+						//defines our variables that will be rendered
 						const weatherIconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 						const date = new Date(day);
 						const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });

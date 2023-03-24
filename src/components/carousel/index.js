@@ -12,13 +12,13 @@ export default class Carousel extends Component {
       mousePosition: null,
     };
   }
-
+// Function to handle the start of a touch event
   handleTouchStart = (e) => {
     this.setState({
       touchPosition: e.touches[0].clientX,
     });
   };
-
+// Function to handle a touch event where the user moves their finger across the screen
   handleTouchMove = (e) => {
     const touchDown = this.state.touchPosition;
 
@@ -41,14 +41,14 @@ export default class Carousel extends Component {
       touchPosition: null,
     });
   };
-
+// Function to handle the press of a mouse button
   handleMouseDown = (e) => {
     e.persist();
     this.setState({
       mousePosition: e.clientX,
     });
   };
-
+// Function to handle the movement of the mouse
   handleMouseMove = (e) => {
     e.persist();
     const mouseDown = this.state.mousePosition;
@@ -72,7 +72,7 @@ export default class Carousel extends Component {
       mousePosition: null,
     });
   };
-
+// Function to move to the next slide
   next = () => {
     if (this.state.currentIndex < this.state.length - 1) {
       this.setState((prevState) => ({
@@ -80,7 +80,7 @@ export default class Carousel extends Component {
       }));
     }
   };
-
+// Function to move to the previous slide
   prev = () => {
     if (this.state.currentIndex > 0) {
       this.setState((prevState) => ({
@@ -88,7 +88,7 @@ export default class Carousel extends Component {
       }));
     }
   };
-
+//Renders the carousel
   render() {
     const { children } = this.props;
     const { currentIndex } = this.state;
