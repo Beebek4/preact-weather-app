@@ -30,11 +30,13 @@ export default class Iphone extends Component {
 			temp: null,
 			cond: null
 		};
+
 		this.fetchLongLatData("london");
 
 
 	}
 
+	// call to fetch current weather data given longtitude and latitude
 	fetchForecastData(lat, lon){
 		const url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&cnt=40&units=metric&appid=1b7c33e6a19e20845a04bebc13db2f76";
 		$.ajax({
@@ -69,10 +71,12 @@ export default class Iphone extends Component {
 
 	}
 
+	//Function to turn first character of a string to capital
 	capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 
+	//function to parse data given from forecast API call
 	parseForecastResponse = (parsed_json) => {
 
 		let day8 = [];
@@ -89,12 +93,14 @@ export default class Iphone extends Component {
 				day8[Math.trunc(i/8)].mintemp = parseInt(parsed_json['list'][i]['main']['temp_min']);
 			}
 		}
+		//setstate so updated data can be rendered
 		this.setState({
 			dayforecast: day8
 		});
 
 	}
 
+	//function to parse data given from longtitude and latitude API call
 	parseLongLatResponse = (parsed_json) => {
 		let lat = parsed_json['0']['lat'];
 		let lon = parsed_json['0']['lon'];
@@ -108,10 +114,12 @@ export default class Iphone extends Component {
 
 		// call to fetch weather data using given long and lat
 		this.fetchWeatherData(this.state.locationLatitude,this.state.locationLongtitude);
+		// call to fetch forecast data using given long and lat
 		this.fetchForecastData(this.state.locationLatitude,this.state.locationLongtitude);
 	}
 
 	parseResponse = (parsed_json) => {
+		//Parsing data of current day from API callx
 		let temp_c = parsed_json['main']['temp'];
 		let conditions = parsed_json['weather']['0']['description'];
 		let icon = parsed_json['weather']['0']['icon'];
