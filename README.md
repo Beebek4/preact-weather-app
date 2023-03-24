@@ -1,4 +1,5 @@
-# Preact Boilerplate / Starter Kit for a Weather App
+# OutdoorCast Weather App, GUI Group 25
+
 
 ## Set-Up Guide
 - [Installation](#installation)
