@@ -4,7 +4,6 @@ import style from '../widgets/iphone_widgets';
 
 export default class Widgets extends Component {
 
-	// rendering a function when the button is clicked
 	render() {
 		return (
 			<div class={style.container}>
